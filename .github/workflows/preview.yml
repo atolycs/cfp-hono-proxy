@@ -115,6 +115,8 @@ jobs:
             
             const sha = context.payload.pull_request?.head.sha ?? context.sha;
 
+            const deploy_url = "${{ steps.cloudflare_pages_deploy.outputs.pages-deployment-alias-url }}";
+
             await github.rest.repos.createCommitStatus({
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -122,7 +124,7 @@ jobs:
               description: "Launched Preview Site!",
               state: 'success',
               sha,
-              target_url: '${{ steps.cloudflare_pages_deploy.outputs.deployment-url }}'
+              target_url: deploy_url
             });
 
             const pulls = await github.rest.pulls.list({
@@ -143,7 +145,7 @@ jobs:
                   '# Deploy result',
                   '| Name | Result |',
                   '| ---- | ------ |',
-                  '| **Preview URL** | ${{ steps.cloudflare_pages_deploy.outputs.deployment-url }} |',
+                  '| **Preview URL** | '+ deploy_url + ' |',
                   '| **Last commit** |' + sha  + ' |',
                 ].join('\n')
               })
