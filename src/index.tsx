@@ -9,9 +9,12 @@ app.use(renderer);
 app.get("/", (c) => {
   return c.render(
     <div>
+      <h3>Landing Pages</h3>
       <a href="/setup.ps1">Windows setup tool</a>
       <br />
       <a href="/setup.sh">Ubuntu setup tool</a>
+      <br />
+      <a href="/nixos/init">NixOS Bootstrap</a>
     </div>,
   );
 });
