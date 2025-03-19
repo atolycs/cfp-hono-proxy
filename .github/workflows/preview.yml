@@ -115,6 +115,7 @@ jobs:
           script: |
             
             const sha = context.payload.pull_request?.head.sha ?? context.sha;
+            const pr_number = context.payload.pull_request?.number;
 
             await github.rest.repos.createCommitStatus({
               owner: context.repo.owner,
@@ -134,18 +135,16 @@ jobs:
               base: 'main'
             })
             
-            if (pulls.data.length == 1) {
-
-              await github.rest.pulls.createReview({
-                ...context.repo,
-                pull_number: pulls.data[0].number,
-                event: 'COMMENT',
-                body: [
-                  '# Deploy result',
-                  '| Name | Result |',
-                  '| ---- | ------ |',
-                  '| **Preview URL** | ${{ steps.cloudflare_pages_deploy.outputs.deployment-url }} |',
-                  '| **Last commit** |' + sha  + ' |',
-                ].join('\n')
-              })
-            }
+            await github.rest.pulls.createReview({
+              ...context.repo,
+              pull_number: pr_number,
+              event: 'COMMENT',
+              body: [
+                '# Deploy result',
+                 '| Name | Result |',
+                '| ---- | ------ |',
+                '| **Preview URL** | ${{ steps.cloudflare_pages_deploy.outputs.deployment-url }} |',
+                '| **Last commit** |' + sha  + ' |',
+              ].join('\n')
+            })
+          }
