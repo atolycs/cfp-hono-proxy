@@ -13,6 +13,38 @@ on:
 
 
 jobs:
+
+  closed_comment:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true
+    steps:
+      - name: Setup environment
+        uses: actions/setup-node@v4
+
+      - name: Create Github Apps Token
+        uses: atolycs/create-app-auth@v1
+        id: gh_token
+        with:
+          app-id: ${{ secrets.APP_ID }}
+          private-key: ${{ secrets.APP_PEM }}
+
+      - name: closed comment
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ steps.gh_token.outputs.token }}
+          script: |
+           const pr_number = context.payload.pull_request?.number;
+           await github.rest.pulls.createReview({
+             ...context.repo,
+             pull_number: pr_number,
+             event: 'COMMENT',
+             body: [
+               'Thank you review.'
+             ].join('\n')
+           })
+
+
+
   build:
     name: Build Hono Build
     runs-on: ubuntu-latest
