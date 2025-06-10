@@ -12,6 +12,8 @@ app.get("/", (c) => {
       <h3>Landing Pages</h3>
       <a href="/setup.ps1">Windows setup tool</a>
       <br />
+      <a href="/winget">Winget setup tool</a>
+      <br />
       <a href="/setup.sh">Ubuntu setup tool</a>
       <br />
       <a href="/nixos/init">NixOS Bootstrap</a>
@@ -22,6 +24,12 @@ app.get("/", (c) => {
 app.get("/setup.ps1", (c) => {
   return proxy(
     "https://raw.githubusercontent.com/atolycs/setup-tools/refs/heads/main/win/deploy.ps1",
+  );
+});
+
+app.get("/winget", (c) => {
+  return proxy(
+    "https://raw.githubusercontent.com/atolycs/setup-tools/refs/heads/main/win/winget_update.ps1",
   );
 });
 
