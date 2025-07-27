@@ -14,6 +14,8 @@ app.get("/", (c) => {
       <br />
       <a href="/winget">Winget setup tool</a>
       <br />
+      <a href="/ubuntu/autoinstall">Ubuntu AutoInstall</a>
+      <br />
       <a href="/setup.sh">Ubuntu setup tool</a>
       <br />
       <a href="/nixos/init">NixOS Bootstrap</a>
@@ -40,6 +42,12 @@ app.get("/setup.sh", (c) => {
 app.get("/nixos/init", (c) => {
   return proxy(
     "https://raw.githubusercontent.com/atolycs/setup-tools/refs/heads/main/nixos/deploy.sh",
+  );
+});
+
+app.get("/ubuntu/autoinstall", (c) => {
+  return proxy(
+    "https://github.com/atolycs/ubuntu-vm-autoinstall/raw/refs/heads/main/autoinstall.yaml",
   );
 });
 
