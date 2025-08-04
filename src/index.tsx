@@ -19,6 +19,9 @@ app.get("/", (c) => {
       <a href="/setup.sh">Ubuntu setup tool</a>
       <br />
       <a href="/nixos/init">NixOS Bootstrap</a>
+      <br />
+      <a href="/darwin/setup.sh">macOS Environment setup tool</a>
+      <br />
     </div>,
   );
 });
@@ -48,6 +51,12 @@ app.get("/nixos/init", (c) => {
 app.get("/ubuntu/autoinstall", (c) => {
   return proxy(
     "https://github.com/atolycs/ubuntu-vm-autoinstall/raw/refs/heads/main/autoinstall.yaml",
+  );
+});
+
+app.get("/darwin/setup.sh", (c) => {
+  return proxy(
+    "https://github.com/atolycs/setup-tools/raw/refs/heads/main/macos/machine-setup.sh",
   );
 });
 
