@@ -1,9 +1,14 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "cfp-hono-proxy",
+  "name": "cfpw-hono-proxy",
   "compatibility_date": "2025-03-11",
   "pages_build_output_dir": "./dist",
   "compatibility_flags": ["nodejs_compat"]
+  // "main": "./dist/index.js",
+  // "assets": {
+  //   "directory": "./dist"
+  // },
+  // "preview_urls": true
   // "vars": {
   //   "MY_VAR": "my-variable"
   // },
