@@ -7,38 +7,37 @@ const app = new Hono();
 app.use(renderer);
 
 app.get("/", (c) => {
-  console.log(c.req.header("User-Agent"))
+  console.log(c.req.header("User-Agent"));
 
   if (c.req.header("User-Agent").match("curl")) {
-  return c.text(
+    return c.text(
       [
         "/setup.ps1",
         "/winget",
         "/ubuntu/autoinstall",
         "/setup.sh",
         "/nixos/init",
-        "/darwin/setup.sh"
-      ].join("\n")
-    )
-  } else { 
-  return c.render(
-    <div>
-      <h3>Landing Pages</h3>
-      <a href="/setup.ps1">Windows setup tool</a>
-      <br />
-      <a href="/winget">Winget setup tool</a>
-      <br />
-      <a href="/ubuntu/autoinstall">Ubuntu AutoInstall</a>
-      <br />
-      <a href="/setup.sh">Ubuntu setup tool</a>
-      <br />
-      <a href="/nixos/init">NixOS Bootstrap</a>
-      <br />
-      <a href="/darwin/setup.sh">macOS Environment setup tool</a>
-      <br />
-    </div>
-    ,
-  );
+        "/darwin/setup.sh",
+      ].join("\n"),
+    );
+  } else {
+    return c.render(
+      <div>
+        <h3>Landing Pages</h3>
+        <a href="/setup.ps1">Windows setup tool</a>
+        <br />
+        <a href="/winget">Winget setup tool</a>
+        <br />
+        <a href="/ubuntu/autoinstall">Ubuntu AutoInstall</a>
+        <br />
+        <a href="/setup.sh">Ubuntu setup tool</a>
+        <br />
+        <a href="/nixos/init">NixOS Bootstrap</a>
+        <br />
+        <a href="/darwin/setup.sh">macOS Environment setup tool</a>
+        <br />
+      </div>,
+    );
   }
 });
 
