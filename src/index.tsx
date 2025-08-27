@@ -7,6 +7,20 @@ const app = new Hono();
 app.use(renderer);
 
 app.get("/", (c) => {
+  console.log(c.req.header("User-Agent"))
+
+  if (c.req.header("User-Agent").match("curl")) {
+  return c.text(
+      [
+        "/setup.ps1",
+        "/winget",
+        "/ubuntu/autoinstall",
+        "/setup.sh",
+        "/nixos/init",
+        "/darwin/setup.sh"
+      ].join("\n")
+    )
+  } else { 
   return c.render(
     <div>
       <h3>Landing Pages</h3>
@@ -22,8 +36,10 @@ app.get("/", (c) => {
       <br />
       <a href="/darwin/setup.sh">macOS Environment setup tool</a>
       <br />
-    </div>,
+    </div>
+    ,
   );
+  }
 });
 
 app.get("/setup.ps1", (c) => {
