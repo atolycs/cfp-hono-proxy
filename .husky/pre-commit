@@ -1,2 +1,0 @@
-#npm test
-npm run biome:format && git update-index --again
