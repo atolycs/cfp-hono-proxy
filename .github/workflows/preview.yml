@@ -60,7 +60,7 @@ jobs:
 
     steps:
       - name: Setup environment
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
 
       - name: Create Github Apps Token
         uses: atolycs/create-app-auth@v1
