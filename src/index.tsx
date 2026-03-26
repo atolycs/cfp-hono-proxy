@@ -2,8 +2,8 @@ import { Hono } from "hono";
 import { proxy } from "hono/proxy";
 import { renderer } from "./renderer";
 
-import { toAbsoluteUrl } from "./lib/url";
 import { logger } from "hono/logger";
+import { HttpProxy } from "vite";
 
 const app = new Hono();
 
@@ -27,11 +27,6 @@ app.get("/", (c) => {
     );
   } else {
 
-    const importJson = () => {
-      const url = encodeURIComponent(toAbsoluteUrl("/static/atolycs-configuration.json"))
-      window.location.href = `karabiner://arabiner/assets/complex_modifications/import?url=${url}`
-    }
-
     return c.render(
       <div>
         <h3>Landing Pages</h3>
@@ -47,9 +42,7 @@ app.get("/", (c) => {
         <br />
         <a href="/darwin/setup.sh">macOS Environment setup tool</a>
         <br />
-        <a href={
-          `karabiner://karabiner/assets/complex_modifications/import?url=${encodeURIComponent(toAbsoluteUrl("/static/atolycs-configuration.json"))}
-          `} > test </a>
+        <a href="/karabiner-elements">Karabiner Elements configuration</a>
       </div >,
 
     );
@@ -89,5 +82,15 @@ app.get("/darwin/setup.sh", (c) => {
     "https://github.com/atolycs/setup-tools/raw/refs/heads/main/macos/machine-setup.sh",
   );
 });
+
+app.get("/json/atolycs-configuration.json", (c) => {
+  const karabiner_url = `${new URL(c.req.url).origin}/static/atolycs-configuration.json`
+  return proxy(karabiner_url)
+})
+
+app.get("/karabiner-elements", (c) => {
+  const karabiner_url = `${new URL(c.req.url).origin}/json/atolycs-configuration.json`
+  return c.redirect(`karabiner://karabiner/assets/complex_modifications/import?url=${karabiner_url}`)
+})
 
 export default app;
