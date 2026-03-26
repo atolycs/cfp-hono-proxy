@@ -1,0 +1,8 @@
+ignoredBuiltDependencies:
+  - esbuild
+  - lefthook
+  - sharp
+  - workerd
+
+onlyBuiltDependencies:
+  - '@atolycs/biome-config'

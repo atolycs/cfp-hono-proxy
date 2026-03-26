@@ -2,14 +2,19 @@ import { Hono } from "hono";
 import { proxy } from "hono/proxy";
 import { renderer } from "./renderer";
 
+import { toAbsoluteUrl } from "./lib/url";
+import { logger } from "hono/logger";
+
 const app = new Hono();
 
 app.use(renderer);
 
+app.use(logger())
+
 app.get("/", (c) => {
   console.log(c.req.header("User-Agent"));
 
-  if (c.req.header("User-Agent").match("curl")) {
+  if (c.req.header("User-Agent")?.match("curl")) {
     return c.text(
       [
         "/setup.ps1",
@@ -21,6 +26,12 @@ app.get("/", (c) => {
       ].join("\n"),
     );
   } else {
+
+    const importJson = () => {
+      const url = encodeURIComponent(toAbsoluteUrl("/static/atolycs-configuration.json"))
+      window.location.href = `karabiner://arabiner/assets/complex_modifications/import?url=${url}`
+    }
+
     return c.render(
       <div>
         <h3>Landing Pages</h3>
@@ -36,7 +47,11 @@ app.get("/", (c) => {
         <br />
         <a href="/darwin/setup.sh">macOS Environment setup tool</a>
         <br />
-      </div>,
+        <a href={
+          `karabiner://karabiner/assets/complex_modifications/import?url=${encodeURIComponent(toAbsoluteUrl("/static/atolycs-configuration.json"))}
+          `} > test </a>
+      </div >,
+
     );
   }
 });
