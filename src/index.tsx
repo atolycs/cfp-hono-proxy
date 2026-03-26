@@ -3,12 +3,13 @@ import { proxy } from "hono/proxy";
 import { renderer } from "./renderer";
 
 import { logger } from "hono/logger";
-import { HttpProxy } from "vite";
+import { contextStorage } from "hono/context-storage";
+import { generateKarabinerURL } from "./lib/generateURL";
 
 const app = new Hono();
 
 app.use(renderer);
-
+app.use(contextStorage())
 app.use(logger())
 
 app.get("/", (c) => {
@@ -89,8 +90,8 @@ app.get("/json/atolycs-configuration.json", (c) => {
 })
 
 app.get("/karabiner-elements", (c) => {
-  const karabiner_url = `${new URL(c.req.url).origin}/json/atolycs-configuration.json`
-  return c.redirect(`karabiner://karabiner/assets/complex_modifications/import?url=${karabiner_url}`)
+  // const karabiner_url = `${new URL(c.req.url).origin}/json/atolycs-configuration.json`
+  return c.redirect(generateKarabinerURL("/json/atolycs-configuration.json"))
 })
 
 export default app;

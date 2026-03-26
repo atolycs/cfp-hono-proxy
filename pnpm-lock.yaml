@@ -15,6 +15,9 @@ importers:
       '@atolycs/biome-config':
         specifier: ^0.2.3
         version: 0.2.5
+      '@biomejs/biome':
+        specifier: ^2.4.9
+        version: 2.4.9
       '@cloudflare/workers-types':
         specifier: ^4.20250214.0
         version: 4.20260317.1
