@@ -1,16 +1,15 @@
 import { Hono } from "hono";
-import { proxy } from "hono/proxy";
-import { renderer } from "./renderer";
-
-import { logger } from "hono/logger";
 import { contextStorage } from "hono/context-storage";
+import { logger } from "hono/logger";
+import { proxy } from "hono/proxy";
 import { generateKarabinerURL } from "./lib/generateURL";
+import { renderer } from "./renderer";
 
 const app = new Hono();
 
 app.use(renderer);
-app.use(contextStorage())
-app.use(logger())
+app.use(contextStorage());
+app.use(logger());
 
 app.get("/", (c) => {
   console.log(c.req.header("User-Agent"));
@@ -27,7 +26,6 @@ app.get("/", (c) => {
       ].join("\n"),
     );
   } else {
-
     return c.render(
       <div>
         <h3>Landing Pages</h3>
@@ -44,8 +42,7 @@ app.get("/", (c) => {
         <a href="/darwin/setup.sh">macOS Environment setup tool</a>
         <br />
         <a href="/karabiner-elements">Karabiner Elements configuration</a>
-      </div >,
-
+      </div>,
     );
   }
 });
@@ -85,13 +82,13 @@ app.get("/darwin/setup.sh", (c) => {
 });
 
 app.get("/json/atolycs-configuration.json", (c) => {
-  const karabiner_url = `${new URL(c.req.url).origin}/static/atolycs-configuration.json`
-  return proxy(karabiner_url)
-})
+  const karabiner_url = `${new URL(c.req.url).origin}/static/atolycs-configuration.json`;
+  return proxy(karabiner_url);
+});
 
 app.get("/karabiner-elements", (c) => {
   // const karabiner_url = `${new URL(c.req.url).origin}/json/atolycs-configuration.json`
-  return c.redirect(generateKarabinerURL("/json/atolycs-configuration.json"))
-})
+  return c.redirect(generateKarabinerURL("/json/atolycs-configuration.json"));
+});
 
 export default app;
