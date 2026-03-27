@@ -82,7 +82,10 @@ app.get("/darwin/setup.sh", (c) => {
 });
 
 app.get("/json/atolycs-configuration.json", (c) => {
-  const karabiner_url = `${new URL(c.req.url).origin}/static/atolycs-configuration.json`;
+  console.log(import.meta.env.DEV);
+  const karabiner_url = import.meta.env.DEV
+    ? `${new URL(c.req.url).origin}/static/atolycs-configuration.json`
+    : `https://github.com/atolycs/setup-tools/raw/refs/heads/main/karabiner/atolycs-configuration.json`;
   return proxy(karabiner_url);
 });
 
