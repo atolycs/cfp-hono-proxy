@@ -15,7 +15,7 @@
     "@atolycs/biome-config": "^0.3.2",
     "@cloudflare/workers-types": "^4.20260401.1",
     "@hono/vite-build": "^1.10.1",
-    "@hono/vite-dev-server": "^0.19.1",
+    "@hono/vite-dev-server": "^0.25.0",
     "vite": "^6.4.1",
     "wrangler": "^4.79.0"
   }
