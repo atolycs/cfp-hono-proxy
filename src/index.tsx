@@ -81,6 +81,12 @@ app.get("/darwin/setup.sh", (c) => {
   );
 });
 
+app.get("/linux/live", (c) => {
+  return proxy(
+    "https://github.com/atolycs/setup-tools/raw/refs/heads/main/linux/live.sh",
+  );
+});
+
 app.get("/json/atolycs-configuration.json", (c) => {
   console.log(import.meta.env.DEV);
   const karabiner_url = import.meta.env.DEV
